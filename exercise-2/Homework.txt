@@ -3,16 +3,16 @@ Consider the following paragraph from Darwin's On Origin of Species, which helep
 As species of the same genus have usually, though by no means invariably, some similarity in habits and constitution, and always in structure, the struggle will generally be more severe between species of the same genus, when they come into competition with each other, than between species of distinct genera. We see this in the recent extension over parts of the United States of one species of swallow having caused the decrease of another species. The recent increase of the missel-thrush in parts of Scotland has caused the decrease of the song-thrush. How frequently we hear of one species of rat taking the place of another species under the most different climates! In Russia the small Asiatic cockroach has everywhere driven before it its great congener. One species of charlock will supplant another, and so in other cases. We can dimly see why the competition should be most severe between allied forms, which fill nearly the same place in the economy of nature; but probably in no one case could we precisely say why one species has been victorious over another in the great battle of life.
 
 1.  Write a regular expression that will find all of the words beginning with the letter `s`. Your regular expression should capture the whole word- not just the beginning `s`!  
-ANSWER:________________________________________________
+ANSWER:___________\ss\w*\s_____________________________________
 
 2.  Write a regular expression that will find the last word of every sentence. Your regular expression should capture the whole last word - not just the first or last letter! (Hint: note that not all sentences end with a period- one ends in an `!`)   
-ANSWER:________________________________________________
+ANSWER:______________\w*\.|\w*\!__________________________________
 
 3.  Write a regular expression that will find the first word of every sentence. Your regular expression should match the whole first word- not just the first letter!    
-ANSWER:________________________________________________
+ANSWER:________________^\w*\s________________________________
 
 4.  Write a regular expression that will match the **sentence** containing the phrase "Asiatic cockroach".  
-ANSWER:________________________________________________  
+ANSWER:________________^.* Asiatic cockroach.*\.|\!________________________________  
 
 Now consider the following comma-delimited rows of data (this is a small number of rows from some of Gaurav's research, with the actual species codes and seed counts changed...):  
 
@@ -41,8 +41,8 @@ Now consider the following comma-delimited rows of data (this is a small number 
 	744,R,2,MIBA,1096
 
 5.  Write a regular expression that will match any row with an `NA` in the final column.  
-ANSWER:________________________________________________
+ANSWER:_____________\d.*NA$___________________________________
 
 6.  Write a regular expression that will match all rows for where `plot_num` (column 1) is either 740, 741, or 742, and `replicate` (column 3) is either 1 or 4.  
-ANSWER:________________________________________________
+ANSWER:_________________74[0-2],R,[1,4],.*_______________________________
 	
