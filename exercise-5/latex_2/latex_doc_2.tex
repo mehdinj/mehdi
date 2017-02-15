@@ -1,0 +1,28 @@
+\documentclass[12pt]{article}
+\title{A simple \LaTeX\ document}
+\author{Stefano Allesina, Madlen Wilmes}
+\date{}
+\usepackage{graphicx}
+\begin{document}
+\maketitle
+\begin{abstract}
+Here we type a compelling abstract of our paper.
+\end{abstract}
+\section{Introduction}
+Every scientific publication needs an introduction.
+\section{Materials \& Methods}
+The Hardy-Weinberg equilibrium model constitutes the null model of population genetics. It characterizes the distributions of genotype  frequencies in populations that are not evolving.
+\section{Referring to a Figure}
+Here is a sentence that references the figure below (Figure \ref{fig:pop})
+
+\begin{figure}
+  \label{fig:pop}
+\begin{center}
+ \includegraphics[width=0.5\linewidth]{figures/popeye.png}
+\end{center}
+\caption{Here's a caption!}
+
+ \end{figure}
+
+\end{document}
+
