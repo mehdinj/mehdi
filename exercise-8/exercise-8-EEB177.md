@@ -112,6 +112,15 @@
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
+Exercise I:
+===========
+
+------------------------------------------------------------------------
+
+1-Create a scatter plot with CPI on the x axis and HDI on the y axis.
+
+    library("ggrepel")
+    library(ggplot2)
     dat <- read.csv("dataSets/EconomistData.csv")
     head(dat)
 
@@ -123,9 +132,33 @@
     ## 5 5   Argentina       45 0.797 3.0          Americas
     ## 6 6     Armenia       86 0.716 2.6 East EU Cemt Asia
 
-    ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point()
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+
+2-Color the points blue.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point(color="Blue")
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-16-1.png)
+
+3-Map the color of the the points to Region.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point(aes(color=Region))
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+
+4-Make the points bigger by setting size to 2
+
+    ggplot(dat, aes(x = CPI, y = HDI, size = 2)) + geom_point(aes(color=Region))
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+
+5-Map the size of the points to HDI.Rank
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point( aes(color=Region, size= HDI.Rank))
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-19-1.png)
 
     args(geom_histogram)
 
@@ -147,11 +180,11 @@
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-21-1.png)
 
     p2 + geom_histogram(stat = "bin", binwidth=4000)
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-22-1.png)
 
     housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
     rbind(head(housing.sum), tail(housing.sum))
@@ -173,7 +206,62 @@
     ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
       geom_bar(stat="identity")
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-20-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-24-1.png)
+
+Exercise II:
+============
+
+------------------------------------------------------------------------
+
+1-Re-create a scatter plot with CPI on the x axis and HDI on the y axis
+(as you did in the previous exercise).
+
+    library("ggrepel")
+    library(ggplot2)
+    dat <- read.csv("dataSets/EconomistData.csv")
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point()
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-25-1.png)
+
+2-Overlay a smoothing line on top of the scatter plot using
+geom\_smooth.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
+      geom_smooth()
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-26-1.png)
+
+3-Overlay a smoothing line on top of the scatter plot using
+geom\_smooth, but use a linear model for the predictions. Hint: see
+?stat\_smooth.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
+      geom_smooth(formula = y ~ x)
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-27-1.png)
+
+4-Overlay a smoothing line on top of the scatter plot using geom\_line.
+Hint: change the statistical transformation.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
+      geom_line(stat="identity")
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-28-1.png)
+
+5-BONUS: Overlay a smoothing line on top of the scatter plot using the
+default loess method, but make it less smooth. Hint: see ?loess.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
+      geom_smooth(formula = y ~ x, span=0.3)
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-29-1.png)
 
     p3 <- ggplot(housing,
                  aes(x = State,
@@ -185,14 +273,14 @@
                            size = 1.5,
                            position = position_jitter(width = 0.25, height = 0)))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-21-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-30-1.png)
 
     p4 + scale_x_discrete(name="State Abbreviation") +
       scale_color_continuous(name="",
                              breaks = c(1976, 1994, 2013),
                              labels = c("'76", "'94", "'13"))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-22-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-31-1.png)
 
     p4 +
       scale_x_discrete(name="State Abbreviation") +
@@ -201,7 +289,7 @@
                              labels = c("'76", "'94", "'13"),
                              low = "blue", high = "red")
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-23-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-32-1.png)
 
     p4 +
       scale_color_continuous(name="",
@@ -209,7 +297,7 @@
                              labels = c("'76", "'94", "'13"),
                              low = ("blue"), high = ("red"))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-24-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-33-1.png)
 
     p4 +
       scale_color_gradient2(name="",
@@ -220,30 +308,58 @@
                             mid = "gray60",
                             midpoint = 1994)
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-25-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-34-1.png)
+
+    ?muted
+
+Exercise III:
+=============
+
+1.Create a scatter plot with CPI on the x axis and HDI on the y axis.
+Color the points to indicate region.
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point(aes(color=Region))
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-35-1.png)
+
+2-Modify the x, y, and color scales so that they have more
+easily-understood names (e.g., spell out "Human development Index"
+instead of "HDI").
+
+    ggplot(dat, aes(x = CPI, y = HDI)) + geom_point(aes(color=Region))+scale_x_continuous(name="Corruption Perception Index")+scale_y_continuous(name="Human development Index")
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-36-1.png)
+
+3-Modify the color scale to use specific values of your choosing. Hint:
+see ?scale\_color\_manual.
+
+    cols <- c("Americas"= "purple","Asia Pacific"= "black","East EU Cemt Asia"= "white","EU W. Europe"= "blue","MENA"= "red","SSA"= "darkgreen")
+    ggplot(dat, aes(x = CPI, y = HDI)) +   geom_point(aes(color=Region))+scale_x_continuous(name="Corruption Perception Index")+scale_y_continuous(name="Human development Index")+scale_color_manual(values = cols)
+
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-37-1.png)
 
     p5 <- ggplot(housing, aes(x = Date, y = Home.Value))
     p5 + geom_line(aes(color = State))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-26-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-38-1.png)
 
     (p5 <- p5 + geom_line() +
        facet_wrap(~State, ncol = 10))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-27-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-39-1.png)
 
     p5 + theme_linedraw()
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-28-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-40-1.png)
 
     p5 + theme_light()
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-29-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-41-1.png)
 
     p5 + theme_minimal() +
       theme(text = element_text(color = "turquoise"))
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-30-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-42-1.png)
 
     #opts.png
 
@@ -257,7 +373,7 @@
 
     p5 + theme_new
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-31-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-43-1.png)
 
     housing.byyear <- aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
     ggplot(housing.byyear,
@@ -265,7 +381,7 @@
       geom_line(aes(y=Home.Value), color="red") +
       geom_line(aes(y=Land.Value), color="blue")
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-32-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-44-1.png)
 
     library(tidyr)
     home.land.byyear <- gather(housing.byyear,
@@ -278,4 +394,4 @@
                color=type)) +
       geom_line()
 
-![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-33-1.png)
+![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-45-1.png)
