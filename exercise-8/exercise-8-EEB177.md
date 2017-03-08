@@ -239,9 +239,7 @@ geom\_smooth, but use a linear model for the predictions. Hint: see
 ?stat\_smooth.
 
     ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
-      geom_smooth(formula = y ~ x)
-
-    ## `geom_smooth()` using method = 'loess'
+      geom_smooth(method = "lm", formula = y ~ x)
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-27-1.png)
 
@@ -249,7 +247,10 @@ geom\_smooth, but use a linear model for the predictions. Hint: see
 Hint: change the statistical transformation.
 
     ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
-      geom_line(stat="identity")
+      geom_line(stat="smooth")
+
+    ## Warning: Computation failed in `stat_smooth()`:
+    ## object 'auto' of mode 'function' was not found
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-28-1.png)
 
@@ -262,6 +263,7 @@ default loess method, but make it less smooth. Hint: see ?loess.
     ## `geom_smooth()` using method = 'loess'
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-29-1.png)
+<br><br>
 
     p3 <- ggplot(housing,
                  aes(x = State,
