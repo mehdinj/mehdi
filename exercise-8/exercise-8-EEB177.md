@@ -247,10 +247,11 @@ geom\_smooth, but use a linear model for the predictions. Hint: see
 Hint: change the statistical transformation.
 
     ggplot(dat, aes(x = CPI, y = HDI)) + geom_point() +
-      geom_line(stat="smooth")
+      stat_smooth(stat="loess")
 
-    ## Warning: Computation failed in `stat_smooth()`:
-    ## object 'auto' of mode 'function' was not found
+    ## Warning: Ignoring unknown parameters: stat
+
+    ## `geom_smooth()` using method = 'loess'
 
 ![](exercise-8-EEB177_files/figure-markdown_strict/unnamed-chunk-28-1.png)
 
