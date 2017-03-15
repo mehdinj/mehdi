@@ -1,0 +1,176 @@
+---
+title: "Evolution of Avian Atherosclerosis"
+author: "Mehdi Nojoumi"
+geometry: margin=1in
+output:
+  pdf_document: default
+fontsize: 12pt
+bibliography: biblio.bib
+csl: ecology-letters.csl
+---
+
+## Here is a Markdown subheading (Level 2)
+
+We can use markdown syntax to *italicize* or **bold** or ~~strikethrough~~ text. Since Markdown doesn't include small-caps functionality, we can still use \LaTeX functionality to \textsc{write in small caps}.
+
+We can use markdown syntax to include images:  
+
+
+![Here is a forest in Papua New Guinea](images/tropical-forest.jpg)
+
+
+However, there are some limits to markdown- for example, we can't resize the figure to make it larger. We can always turn to \LaTeX code to specify options for the image:
+
+\begin{figure}[t]
+\label{fig:pop}
+\includegraphics[width=15cm, height=15cm,keepaspectratio]{images/tropical-forest.jpg}
+\centering
+\caption{Tropical forest!}
+\end{figure}
+
+\clearpage
+
+## Here is another Markdown subheading
+### Let's add some equations
+
+Here is \LaTeX code to write the likelihood equation that [PyRate uses to estimate rates of speciation and extinction](https://academic.oup.com/sysbio/article/63/3/349/1650079/Bayesian-Estimation-of-Speciation-and-Extinction)\footnote{https://academic.oup.com/sysbio/article/63/3/349/1650079/Bayesian-Estimation-of-Speciation-and-Extinction} (incedently, look! a footnote!). We can write the equation as an in-line equation...
+
+$P(X|s, e, q) = \prod_{i=1}^{n}P_{NHPP}(t_1^i, \dots t_{k_{i}}^i|s_i,e_i,q)$
+
+or as a numbered equation in the `equation` environment:
+
+\begin{equation}
+P(X|s, e, q) = \prod_{i=1}^{n}P_{NHPP}(t_1^i, \dots t_{k_{i}}^i|s_i,e_i,q)
+\end{equation}
+
+\clearpage
+
+## Citing documents 
+
+In this RMarkdown+\LaTeX world, citing documents becomes super easy. We have included the following lines in the `YAML` header:
+
+```
+bibliography: biblio.bib     
+csl: ecology-letters.csl
+```
+
+The first line here tells the software that knits our document that the bibiolography for the document is stored in `biblio.bib`; the second line tells the software that a style-guide that describes exactly how we want our references formatted is saved at `ecology-letters.csl`. **Note**: You can download the style sheet for your journal of choice from [this repository of style sheets](https://www.zotero.org/styles)\footnote{https://www.zotero.org/styles}.
+
+Let's quickly inspect the contents of the files `biblio.bib`, which contains the BibTeX formatted citations for the Cooney et al. paper that we have used as a source for beak morphology data and for PyRate. **NOTE** also that we are using the `system()` function in `R` to execute shell commands from `R`- you may find this handy later on!
+
+```{r, echo = T, eval = T}
+system("cat biblio.bib", intern = T)
+```
+
+
+Given that we have  those two entries in the `biblio.bib` file, we can cite them in the document using the syntax `Here's a sentence that cites both papers [@Cooney_2017; @Silvestro_2014]`. Here's a sentence that cites both papers [@Cooney_2017; @Silvestro_2014].  
+
+\clearpage
+
+## A chunk of R code
+
+Just like any Rmd document, we can add R code chunks to this document:
+
+```{r}
+# make a plot using ggplot2
+library(ggplot2)
+
+# I sample from the diamonds dataset
+data(diamonds)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+
+# build the plot, of Price of Diamond v. Carat
+# Facet by the quality of the cut
+p <- ggplot(data = d, aes(x = carat, y = price)) +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+p
+```
+
+### Controlling plot size
+
+We can control the size of the plot by adding the `fig.height` and `fig.width` arguments to the definition of the R chunk:
+
+```{r, fig.width=5, fig.height=6, fig.align= 'right', fig.cap=" here's some text"}
+# make a plot using ggplot2
+library(ggplot2)
+
+# I sample from the diamonds dataset
+data(diamonds)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+
+# build the plot, of Price of Diamond v. Carat
+# Facet by the quality of the cut
+p <- ggplot(data = d, aes(x = carat, y = price)) +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+p
+```
+
+### Controlling code display, show code but don't run it
+
+We might want to show code that we don't actually run in the document. We can use the `eval = F` argument in the definiton of  the R code chunk
+
+```{r, eval = F}
+# make a plot using ggplot2
+library(ggplot2)
+
+# I sample from the diamonds dataset
+data(diamonds)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+
+# build the plot, of Price of Diamond v. Carat
+# Facet by the quality of the cut
+p <- ggplot(data = d, aes(x = carat, y = price)) +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+p
+```
+
+#### or the other way, run code but don't show it
+Alternatively, we might want to run some code and show the output, but not actually show the code. We can do this with the argument `echo = F`
+
+```{r, echo=  F}
+# make a plot using ggplot2
+library(ggplot2)
+
+# I sample from the diamonds dataset
+data(diamonds)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+
+# build the plot, of Price of Diamond v. Carat
+# Facet by the quality of the cut
+p <- ggplot(data = d, aes(x = carat, y = price)) +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+p
+```
+
+## Other sources of help
+
+There's a lot of great places to get help on RMarkdown documents online:  
+
+- RStudio's guide to Rmarkdown: [link]()   
+- WriteLatex's guide to Latex : [link]()   
+- Yihui Xie's book on Knitr: [link]()  
+
+
+## Finally, importing in the references
+In the current setup, RStudio's Rmd to PDF conversion adds a bibiolography to the end of the paper on a new page. Recall that the citations are being formatted according to `ecology-letters.csl`. So, we add a subheading for the references section at the end of our document:
+
+\clearpage
+
+## References
+
+
+
+
+```{python, eval=F}
+f= open("path/to/file")
+lines=f.readlines()
+some python code
+```
